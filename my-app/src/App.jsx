@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Routes,
+} from "react-router-dom";
 import "./app.css";
 import Dictionary from "./components/Dictionary";
 import SearchForm from "./components/Search";
+import Item from "./pages/item/Item";
+import ItemWithPos from "./pages/itemWithPos/ItemWithPos";
 const axios = require("axios");
 
 function App() {
@@ -30,13 +38,18 @@ function App() {
   };
   return (
     <div className="App">
-      <Router>
+      <BrowserRouter>
         <div className="top">
           <h1 className="App-header">English Dictionary</h1>
           <SearchForm searchHandler={searchHandler}></SearchForm>
         </div>
         <Dictionary itemList={itemList}></Dictionary>
-      </Router>
+
+        <Routes>
+          <Route path="/item/:word" element={<Item />}></Route>
+          <Route path="/item/:word/:pos" element={<ItemWithPos />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
