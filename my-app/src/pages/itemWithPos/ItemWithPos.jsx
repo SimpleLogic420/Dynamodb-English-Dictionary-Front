@@ -13,9 +13,9 @@ function ItemWithPos() {
   }, [word, pos]);
   return (
     <div>
-      <h1>{searchState.word}</h1>
-      <h3>{searchState.pos}</h3>
-      <p>{searchState.definitions}</p>
+      <h1 className="word">{searchState.word}</h1>
+      <h3 className="pos">{searchState.pos}</h3>
+      <p className="definition">{searchState.definitions}</p>
     </div>
   );
 }

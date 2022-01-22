@@ -2,28 +2,36 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function SearchForm({ searchHandler }) {
+function SearchForm() {
   const navigate = useNavigate();
   const [wordValue, setWordValue] = useState([]);
   const [posValue, setPosValue] = useState([]);
+  const [letterValue, setLetterValue] = useState([]);
   return (
     <form
+      className="searchForm"
       onSubmit={(e) => {
         e.preventDefault();
 
-        // if (wordValue.lenth) {
-        //   return;
-        // } else if (wordValue && !posValue) {
-
-        if (posValue.length > 1) {
+        if (
+          posValue.length > 1 &&
+          wordValue.length > 1 &&
+          letterValue.length < 1
+        ) {
           console.log("WWWWWW");
           navigate(`/item/${wordValue}/${posValue}`);
-        } else if (wordValue.length > 1 && posValue.length < 1)
+        } else if (wordValue.length > 1 && posValue.length < 1) {
+          console.log("LLLLLLLL");
           navigate(`/item/${wordValue}`);
-        searchHandler(wordValue, posValue);
-        // } else if (wordValue && posValue) {
-        //   return;
-        // }
+        } else if (wordValue.length < 1 && posValue.length > 1) {
+          if (letterValue.length >= 1) {
+            navigate(`/partOfSpeech/${posValue}/${letterValue}`);
+          } else {
+            navigate(`/partOfSpeech/${posValue}`);
+          }
+        }
+
+        // searchHandler(wordValue, posValue);
       }}
     >
       <input
@@ -36,17 +44,26 @@ function SearchForm({ searchHandler }) {
       />
 
       <br />
-      <br />
       <input
         onChange={(e) => {
           setPosValue(e.target.value);
         }}
         placeholder="Enter Part Of Speech"
         type="text"
-        name="email_id"
+        name="pos"
       />
       <br />
-      <input type="submit" value="Submit" />
+      <input
+        onChange={(e) => {
+          setLetterValue(e.target.value);
+        }}
+        placeholder="Enter First Letters"
+        type="text"
+        name="letters"
+      />
+      <br />
+      <input className="button-30" type="submit" value="Search" />
+      <br />
     </form>
   );
 }

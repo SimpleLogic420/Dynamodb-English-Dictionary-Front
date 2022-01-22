@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 function Item() {
   const { word, pos } = useParams();
+
   const [wordsState, setWordsState] = useState([]);
   //   const [posState, setWordsState] = useState([]);
 
@@ -15,7 +16,7 @@ function Item() {
       const res = await axios.get(`http://localhost:3010/${word}`);
       setWordsState(res.data.Items);
     };
-    console.log(pos);
+
     if (word && !pos) {
       getWord();
     } else if (word && pos) {
@@ -27,10 +28,10 @@ function Item() {
       {wordsState.map((item, index) => {
         return (
           <div key={index}>
-            <h1>{item.word}</h1>
-            <h3>{item.pos}</h3>
+            <h1 className="word">{item.word}</h1>
+            <h3 className="pos">{item.pos}</h3>
             <br />
-            <p>{item.definitions}</p>
+            <p className="definition">{item.definitions}</p>
             {wordsState.length > 1 ? <hr /> : ""}
           </div>
         );
